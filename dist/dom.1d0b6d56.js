@@ -118,6 +118,8 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"dom.js":[function(require,module,exports) {
+function _readOnlyError(name) { throw new Error("\"" + name + "\" is read-only"); }
+
 window.dom = {
   create: function create(string) {
     var container = document.createElement("template");
@@ -263,6 +265,28 @@ window.dom = {
 
     return i;
   }
+};
+
+window.on = function (eventType, element, selector, fn) {
+  if (!(element instanceof Element)) {
+    element = document.querySelector(element);
+  }
+
+  element.addEventListener(eventType, function (e) {
+    var el = e.target;
+
+    while (!el.matches(selector)) {
+      if (element === el) {
+        el = (_readOnlyError("el"), null);
+        break;
+      }
+
+      el = (_readOnlyError("el"), el.parentNode);
+    }
+
+    el && fn.call(el, e, el);
+  });
+  return element;
 };
 },{}],"../../../AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];

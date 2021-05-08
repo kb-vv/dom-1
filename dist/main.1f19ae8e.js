@@ -166,6 +166,9 @@ dom.each(dom.children(t), function (n) {
   return dom.style(n, "color", "red");
 });
 console.log(dom.index(s2));
+window.on("click", ".kk", "div", function () {
+  console.log("点击");
+});
 },{}],"../../../AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';

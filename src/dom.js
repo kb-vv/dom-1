@@ -133,3 +133,20 @@ window.dom = {
     return i;
   },
 };
+window.on=function(eventType,element,selector,fn){
+    if(!(element instanceof Element)){
+        element=document.querySelector(element)
+    }
+    element.addEventListener(eventType,(e)=>{
+        const el=e.target
+        while(!el.matches(selector)){
+            if(element===el){
+                el=null
+                break
+            }
+            el=el.parentNode
+        }
+        el&&fn.call(el,e,el)
+    })
+    return element
+}
